@@ -24,6 +24,14 @@ function App() {
     {
       sources: [
         {
+          src: "http://vjs.zencdn.net/v/oceans.mp4",
+          type: "video/mp4"
+        }
+      ]
+    },
+    {
+      sources: [
+        {
           src: "http://techslides.com/demos/sample-videos/small.mp4",
           type: "video/mp4"
         }
