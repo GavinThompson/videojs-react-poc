@@ -5,7 +5,7 @@ import Video from "./Video";
 
 function App() {
   const videoJsOptions = {
-    autoplay: true,
+    autoplay: false,
     controls: true
     // sources: [{
     //   src: 'http://media.w3.org/2010/05/video/movie_300.mp4',
