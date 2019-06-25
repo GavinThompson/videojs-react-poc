@@ -9,6 +9,17 @@ require("videojs-contrib-ads");
 // console.log("ima", ima);
 // videojs.registerPlugin(ima.name, ima.init);
 
+    const imaOptions = {
+      id: "content_video",
+      // adTagUrl:
+      //   "https://rtbapi.campsiteproject.com/vast/2.0/loop?apiKey=91IYCBRb47serD7iBm6yYIRoxZXRai0hw2WVEhz4mCF09KPnH4gLFJ6SDwAiUivfngNi0pkL8F46lRji16LY1PWkMdzOqlO4HYvF&player%5Bid%5D=test-player&player%5Benvironment%5D=doctors-offices&loop%5BminDuration%5D=0&loop%5BmaxDuration%5D=60&loop%5BdwellTime%5D=20"
+      // adTagUrl:
+      //   "http://demo.tremorvideo.com/proddev/vast/vast_inline_nonlinear.xml"
+      adTagUrl:
+        "https://pubads.g.doubleclick.net/gampad/ads?sz=640x480&iu=/124319096/external/ad_rule_samples&ciu_szs=300x250&ad_rule=1&impl=s&gdfp_req=1&env=vp&output=vmap&unviewed_position_start=1&cust_params=deployment%3Ddevsite%26sample_ar%3Dpreonly&cmsid=496&vid=short_onecue&correlator=",
+
+    };
+
 export default class Video extends React.Component {
   constructor(props) {
     super(props);
@@ -21,15 +32,6 @@ export default class Video extends React.Component {
     // instantiate Video.js
     // videojs.registerPlugin("playlist", videojsPlaylistPlugin);
 
-    const imaOptions = {
-      id: "content_video",
-      // adTagUrl:
-      //   "https://rtbapi.campsiteproject.com/vast/2.0/loop?apiKey=91IYCBRb47serD7iBm6yYIRoxZXRai0hw2WVEhz4mCF09KPnH4gLFJ6SDwAiUivfngNi0pkL8F46lRji16LY1PWkMdzOqlO4HYvF&player%5Bid%5D=test-player&player%5Benvironment%5D=doctors-offices&loop%5BminDuration%5D=0&loop%5BmaxDuration%5D=60&loop%5BdwellTime%5D=20"
-      // adTagUrl:
-      //   "http://demo.tremorvideo.com/proddev/vast/vast_inline_nonlinear.xml"
-      adTagUrl:
-        "https://pubads.g.doubleclick.net/gampad/ads?sz=640x480&iu=/124319096/external/ad_rule_samples&ciu_szs=300x250&ad_rule=1&impl=s&gdfp_req=1&env=vp&output=vmap&unviewed_position_start=1&cust_params=deployment%3Ddevsite%26sample_ar%3Dpreonly&cmsid=496&vid=short_onecue&correlator="
-    };
 
     let ima = require("videojs-ima/dist/videojs.ima");
     videojs.registerPlugin(ima.name, ima.init);
@@ -73,11 +75,20 @@ export default class Video extends React.Component {
     console.log("handleVideoEnded", event);
     // console.log(this, this.player, this.player.playlist);
     //
+
     this.player.ima.setContentWithAdTag(
       this.player.playlist.next(),
-      "https://rtbapi.campsiteproject.com/vast/2.0/loop?apiKey=91IYCBRb47serD7iBm6yYIRoxZXRai0hw2WVEhz4mCF09KPnH4gLFJ6SDwAiUivfngNi0pkL8F46lRji16LY1PWkMdzOqlO4HYvF&player%5Bid%5D=test-player&player%5Benvironment%5D=doctors-offices&loop%5BminDuration%5D=0&loop%5BmaxDuration%5D=60&loop%5BdwellTime%5D=20",
+      this.player.ima.adTagUrl = "https://rtbapi.campsiteproject.com/vast/2.0/loop?apiKey=91IYCBRb47serD7iBm6yYIRoxZXRai0hw2WVEhz4mCF09KPnH4gLFJ6SDwAiUivfngNi0pkL8F46lRji16LY1PWkMdzOqlO4HYvF&player%5Bid%5D=test-player&player%5Benvironment%5D=doctors-offices&loop%5BminDuration%5D=0&loop%5BmaxDuration%5D=60&loop%5BdwellTime%5D=20",
       false
     );
+    this.player.contentSourceType = '' // NOTE: https://github.com/googleads/videojs-ima/issues/437 && https://github.com/googleads/videojs-ima/pull/433
+    this.player.ima.requestAds();
+
+    // TWO WAYS WORK -- above and below!
+    // this.player.ima.requestAds();
+    // this.player.playlist.next()
+
+
 
     //     Function originally looks like this:
     //
